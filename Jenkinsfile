@@ -1,6 +1,11 @@
 pipeline {
     agent any
     options{skipDefaultCheckout()}
+    environment {
+        DB_HOST = '171.32.0.100'
+        USERNAME = 'rld2'
+        PASSWORD = 'RLD@123'
+    }
 
     stages {
         stage('Checkout') {
