@@ -24,7 +24,7 @@ pipeline {
             steps {
                 sh "pytest"
                 sh "whoami"
-                echo "User name is ${env.USERNAME} and passowrd is ${env.PASSWORD}"
+                echo "Commit ID: ${env.GIT_COMMIT}"
             }
         }
 }
