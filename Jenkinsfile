@@ -8,6 +8,23 @@ pipeline {
                 sh "ls -ltr"
             }
         }
+
+        stage('lint and format') {
+            stages{
+                stage('linting')
+                steps{
+                    echo "Linting code in nested state"
+                }
+            }
+            stages{
+                stage('formating')
+                steps{
+                    echo "Formating code in nested state"
+                }
+            }
+            
+        }
+
         stage('Setup') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'AnsiJenkins', usernameVariable: 'vagrant_user', passwordVariable: 'vagrant_password')]){
