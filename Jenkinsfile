@@ -24,7 +24,7 @@ pipeline {
             steps {
                 sh "pytest"
                 sh "whoami"
-                echo "Commit ID: ${GIT_COMMIT}"
+                echo "Commit ID: ${env.GIT_COMMIT}"
             }
         }
 }
