@@ -10,7 +10,7 @@ pipeline {
         }
 
         stage('lint and format') {
-            stages{
+            parallel{
                 stage('linting'){
                     steps{
                         echo "Linting code in nested state"
