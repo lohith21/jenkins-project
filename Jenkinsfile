@@ -27,7 +27,7 @@ pipeline {
 
         stage('Setup') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'AnsiJenkins', usernameVariable: 'vagrant_user', passwordVariable: 'vagrant_password')]){
+                withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'vagrant_user', passwordVariable: 'vagrant_password')]){
 				sh '''
 				   echo ${vagrant_user}
 				   echo ${vagrant_password}
