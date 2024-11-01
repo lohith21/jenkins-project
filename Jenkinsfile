@@ -4,11 +4,12 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'vagrant', usernameVariable: 'vagrant_user', passwordVariable: 'vagrant_password')])
+                withCredentials([usernamePassword(credentialsId: 'vagrant', usernameVariable: 'vagrant_user', passwordVariable: 'vagrant_password')]){
 				sh '''
 				   echo ${vagrant_user}
 				   echo ${vagrant_password}
 				   '''
+                }
                 git url: 'https://github.com/kodekloudhub/jenkins-project.git', branch: 'main'
                 sh "ls -ltr"
             }
