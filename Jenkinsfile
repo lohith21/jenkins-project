@@ -9,8 +9,8 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo "my creds: ${GIT_CREDS}"
-                echo "Username: ${"GIT_CREDS_USR"}"
-                echo "Password: ${"GIT_CREDS_PWD"}"
+                echo "Username: ${GIT_CREDS_USR}"
+                echo "Password: ${GIT_CREDS_PSW}"
                 git url: 'https://github.com/kodekloudhub/jenkins-project.git', branch: 'main'
                 sh "ls -ltr"
             }
