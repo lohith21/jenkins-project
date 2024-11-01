@@ -2,14 +2,15 @@ pipeline {
     agent any
     options{skipDefaultCheckout()}
     environment {
-        DB_HOST = '171.32.0.100'
-        USERNAME = 'rld2'
-        PASSWORD = 'RLD@123'
+        GIT_CREDS = credentials('github') 
     }
 
     stages {
         stage('Checkout') {
             steps {
+                echo "my creds: ${GIT_CREDS}"
+                echo "Username: ${"GIT_CREDS_USR"}"
+                echo "Password: ${"GIT_CREDS_PWD"}"
                 git url: 'https://github.com/kodekloudhub/jenkins-project.git', branch: 'main'
                 sh "ls -ltr"
             }
@@ -17,14 +18,12 @@ pipeline {
         stage('Setup') {
             steps {
                 sh "pip install -r requirements.txt"
-                echo "The database IP is: ${env.DB_HOST}"
             }
         }
         stage('Test') {
             steps {
                 sh "pytest"
                 sh "whoami"
-                echo "Commit ID: ${env.GIT_COMMIT}"
             }
         }
 }
