@@ -1,16 +1,14 @@
 pipeline {
     agent any
     options{skipDefaultCheckout()}
-    environment {
-        GIT_CREDS = credentials('github') 
-    }
-
     stages {
         stage('Checkout') {
             steps {
-                echo "my creds: ${GIT_CREDS}"
-                echo "Username: ${GIT_CREDS_USR}"
-                echo "Password: ${GIT_CREDS_PSW}"
+                withCredentials([usernamePassword(credentialsId: 'vagrant', usernameVariable: 'vagrant_user', passwordVariable: 'vagrant_password')])
+				sh '''
+				   echo ${vagrant_user}
+				   echo ${vagrant_password}
+				   '''
                 git url: 'https://github.com/kodekloudhub/jenkins-project.git', branch: 'main'
                 sh "ls -ltr"
             }
