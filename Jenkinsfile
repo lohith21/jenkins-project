@@ -40,7 +40,7 @@ pipeline {
                 sh "pytest"
                 sh "whoami"
                 withCredentials([usernamePassword(credentialsId: 'AnsiJenkins',
-                usernameVariable: 'myuser', usernamePassword: 'mypass' )]){
+                usernameVariable: 'myuser', sshUserPrivateKey: 'mypass' )]){
                    echo $(myuser)
                    echo $(mypass)
                 }
