@@ -1,6 +1,12 @@
 pipeline {
     agent any
     options{skipDefaultCheckout()}
+    environment {
+        DB_NAME = "devops-db"
+        DB_USER = "devops-user"
+      
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -39,6 +45,7 @@ pipeline {
             steps {
                 sh "pytest"
                 sh "whoami"
+                echo "DB Name is ${DB_NAME} and user is ${DB_USER}"
             }
         }
 }
