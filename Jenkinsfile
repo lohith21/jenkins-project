@@ -39,7 +39,7 @@ pipeline {
             steps {
                 sh "pytest"
                 sh "whoami"
-                withCredentials([usernamePassword(credentialsId: 'vagrant',
+                withCredentials([usernamePassword(credentialsId: 'AnsiJenkins',
                 usernameVariable: 'myuser', usernamePassword: 'mypass' )]){
                    echo $(myuser)
                    echo $(mypass)
