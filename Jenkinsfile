@@ -41,7 +41,9 @@ pipeline {
                 sh "whoami"
           withCredentials([usernamePassword(credentialsId: 'AnsiJenkins', keyFileVariable: 'mypass' )]){
                    sh '''
-                   ssh -i $mypass vagrant@172.31.0.101 "echo Hello"
+                   
+                   echo $mypass
+                   
                    '''
            }
         }
