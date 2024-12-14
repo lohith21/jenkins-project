@@ -39,11 +39,10 @@ pipeline {
             steps {
                 sh "pytest"
                 sh "whoami"
-                withCredentials([usernamePassword(credentialsId: 'AnsiJenkins',
-                usernameVariable: 'myuser', sshUserPrivateKey: 'mypass' )]){
-                   echo $(myuser)
-                   echo $(mypass)
-                }
+                withCredentials([usernamePassword(credentialsId: 'AnsiJenkins', keyFileVariable: 'mypass' )]){
+                   ssh '''
+                   ssh -i $mypass vagrant@172.31.0.101 "echo Hello"
+                   '''
             }
         }
 }
