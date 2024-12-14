@@ -39,13 +39,6 @@ pipeline {
             steps {
                 sh "pytest"
                 sh "whoami"
-          withCredentials([usernamePassword(credentialsId: 'AnsiJenkins', keyFileVariable: 'mypass' )]){
-                   sh '''
-                   
-                   echo $mypass
-                   
-                   '''
-           }
         }
 }
 }
