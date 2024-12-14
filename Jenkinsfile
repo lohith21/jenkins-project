@@ -40,7 +40,7 @@ pipeline {
                 sh "pytest"
                 sh "whoami"
                 withCredentials([usernamePassword(credentialsId: 'AnsiJenkins', keyFileVariable: 'mypass' )]){
-                   ssh '''
+                   sh '''
                    ssh -i $mypass vagrant@172.31.0.101 "echo Hello"
                    '''
             }
