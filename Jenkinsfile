@@ -1,9 +1,7 @@
 pipeline {
     agent any
     options{skipDefaultCheckout()}
-    withCredentials([usernamePassword(credentialsId: 'vagrant',
-    usernameVariable: 'myuser', usernamePassword: 'mypass' )])
-    stages {
+     stages {
         stage('Checkout') {
             steps {
                  git url: 'https://github.com/kodekloudhub/jenkins-project.git', branch: 'main'
@@ -41,8 +39,11 @@ pipeline {
             steps {
                 sh "pytest"
                 sh "whoami"
-                echo $(myuser)
-                echo $(mypass)
+                withCredentials([usernamePassword(credentialsId: 'vagrant',
+                usernameVariable: 'myuser', usernamePassword: 'mypass' )]){
+                   echo $(myuser)
+                   echo $(mypass)
+                }
             }
         }
 }
