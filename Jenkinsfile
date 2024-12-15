@@ -7,14 +7,14 @@ pipeline {
     stages{ 
      
         stage('test') {
-                when {
-                    expression{
-                        param.RUN_TEST == true
-                    }
+            when {
+                expression {
+                    param.RUN_TEST == true
                 }
-                steps{
-                    echo "Running Unit Tests"
-                }
+            }
+            steps{
+                echo "Running Unit Tests"
+            }
             }
         stage('deploy'){
             steps{
