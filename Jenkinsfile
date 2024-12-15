@@ -1,10 +1,14 @@
 pipeline {
     agent any
-    options{skipDefaultCheckout()}
+    options{
+        skipDefaultCheckout()
+        timeout(time: 1, unit: 'MINUTES')
+        }
      stages {
         stage('Checkout') {
             steps {
-                 git url: 'https://github.com/kodekloudhub/jenkins-project.git', branch: 'main'
+                sh "sleep 70"    
+                git url: 'https://github.com/kodekloudhub/jenkins-project.git', branch: 'main'
                 sh "ls -ltr"
             }
         }
