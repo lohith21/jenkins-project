@@ -1,47 +1,23 @@
 pipeline {
     agent any
-    options{
-        skipDefaultCheckout()
-        timeout(time: 10, unit: 'MINUTES')
+    parameters{
+        string(name: 'ENVIRONMENT', defaultvalue: 'dev', description: 'Specify env name')
+        booleanParam(name: 'RUN_TEST', defaultvalue: true, description: 'Run tests in pipeline') 
         }
-     stages {
-        stage('Checkout') {
-            steps {
-                git url: 'https://github.com/kodekloudhub/jenkins-project.git', branch: 'main'
-                sh "ls -ltr"
+     stage('test') {
+            when {
+                expression{
+                    param.RUN_TEST == true
+                }
+              }
+            steps{
+                echo "Running Unit Tests"
             }
         }
+    stage('deploy'){
+        steps{
+            echo "Deploying the app in ${params.ENVIRONMENT} environment"
+        }
+    }
 
-        stage('lint and format') {
-            parallel{
-                stage('linting'){
-                    steps{
-                        echo "Linting code in nested state"
-                    }
-                }
-                stage('formating'){
-                    steps{
-                        echo "Formating code in nested state"
-                    }
-                }
-            }
-        }
-
-        stage('Setup') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'vagrant_user', passwordVariable: 'vagrant_password')]){
-				sh '''
-				   echo ${vagrant_user}
-				   echo ${vagrant_password}
-				   '''
-                }
-                sh "pip install -r requirements.txt"
-            }
-        }
-        stage('Test') {
-            steps {
-                echo "last stage for testing"
-}
-}
-}
 }
