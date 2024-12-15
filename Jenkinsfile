@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    parameters{
+    parameters {
         string(name: 'ENVIRONMENT', defaultValue: 'dev', description: 'Specify env name')
         booleanParam(name: 'RUN_TEST', defaultValue: true, description: 'Run tests in pipeline') 
         }
@@ -9,7 +9,7 @@ pipeline {
         stage('test') {
             when {
                 expression {
-                    param.RUN_TEST == true
+                    params.RUN_TEST == true
                 }
             }
             steps{
