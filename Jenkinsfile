@@ -30,6 +30,7 @@ pipeline {
                 ssh -i $MY_SSH_KEY -o StrictHostKeyChecking=no ${username}@${SERVER_IP} << EOF
                      unzip -o /home/vagrant/myapp.zip -d /home/vagrant/app/
                      source app/venv/bin/activate
+                     apt install pip
                      pip install -r requirements.txt
                      sudo systemctl restart flaskapp.service
                 EOF
