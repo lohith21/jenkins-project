@@ -28,12 +28,12 @@ pipeline {
                 sh '''
                 scp -i $MY_SSH_KEY -o StrictHostKeyChecking=no myapp.zip ${username}@${SERVER_IP}:/home/vagrant/
                 ssh -i $MY_SSH_KEY -o StrictHostKeyChecking=no ${username}@${SERVER_IP} <<EOF
-                     unzip -o /home/vagrant/myapp.zip -d /home/vagrant/app/
-                     source app/venv/bin/activate
-                     pip install -r /home/vagrant/app/requirements.txt
-                     sudo systemctl restart flaskapp.service
+                unzip -o /home/vagrant/myapp.zip -d /home/vagrant/app/
+                source app/venv/bin/activate
+                pip install -r /home/vagrant/app/requirements.txt
+                sudo systemctl restart flaskapp.service
                 EOF
-                 '''
+                '''
             }
         }
      }
