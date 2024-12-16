@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        SERVER_IP = withCredentials('k8s-worker2')
+        SERVER_IP = credentials('k8s-worker2')
     }
     stages{ 
      stage('Setup') {
