@@ -32,7 +32,7 @@ pipeline {
                 source app/venv/bin/activate
                 pip install -r /home/vagrant/app/requirements.txt
                 sudo systemctl restart flaskapp.service
-                EOF
+EOF
                 '''
             }
         }
