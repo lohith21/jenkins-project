@@ -27,16 +27,16 @@ pipeline {
             withCredentials([sshUserPrivateKey(credentialsId: 'k8s-worker2-key', keyFileVariable: 'MY_SSH_KEY', usernameVariable: 'username')]) {
                 sh '''
                 scp -i $MY_SSH_KEY -o StrictHostKeyChecking=no myapp.zip ${username}@${SERVER_IP}:/home/vagrant/
-                ssh -i $MY_SSH_KEY -o StrictHostKeyChecking=no ${username}@${SERVER_IP} << EOF
+                ssh -i $MY_SSH_KEY -o StrictHostKeyChecking=no ${username}@${SERVER_IP} <<EOF
                      unzip -o /home/vagrant/myapp.zip -d /home/vagrant/app/
                      pwd
-                     /home/vagrant/app/
+                     cd /home/vagrant/app/
                      pwd
                      source app/venv/bin/activate
                      pip install -r requirements.txt
                      sudo systemctl restart flaskapp.service
                 EOF
-                '''
+                 '''
             }
         }
      }
