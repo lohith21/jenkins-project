@@ -1,26 +1,42 @@
 pipeline {
     agent any
-    parameters {
-        string(name: 'ENVIRONMENT', defaultValue: 'dev', description: 'Specify env name')
-        booleanParam(name: 'RUN_TEST', defaultValue: true, description: 'Run tests in pipeline') 
-        }
+    environment {
+        SERVER_IP = withCredentials('k8s-worker2')
+    }
     stages{ 
-     
-        stage('test') {
-            when {
-                expression {
-                    params.RUN_TEST == true
-                }
+     stage('Setup') {
+            steps {
+                sh "pip install -r requirements.txt"
             }
+       }
+     stage('Test'){
             steps{
-                echo "Running Unit Tests"
-            }
-            }
-        stage('deploy'){
-            steps{
-                echo "Deploying the app in ${params.ENVIRONMENT} environment"
+                sh "pytest"
             }
         }
+     
+     stage('Package code') {
+        steps {
+            sh "zip -r myapp.zip ./* -x '*.git*'"
+            sh "ls -lart"
+        }
+     }
+
+     stage('Deploy to Prod') {
+        steps {
+            withCredentials([sshUserPrivateKey(credentialsId: 'k8s-worker2-key', keyFileVariable: 'MY_SSH_KEY', usernameVariable: 'username')]) {
+                sh '''
+                scp -i $MY_SSH_KEY -o StrictHostKeyChecking=no myapp.zip ${username}@${SERVER_IP}:/home/vagrant/
+                ssh -i $MY_SSH_KEY -o StrictHostKeyChecking=no ${username}@${SERVER_IP} << EOF
+                     unzip -o /home/vagrant/myapp.zip -d /home/vagrant/app/
+                     source app/venv/bin/activate
+                     pip install -r requirements.txt
+                     sudo systemctl restart flaskapp.service
+                EOF
+                '''
+            }
+        }
+     }
 
     }
 }
